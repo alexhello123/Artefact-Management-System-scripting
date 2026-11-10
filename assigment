@@ -1,0 +1,245 @@
+import os
+import time
+import sys
+
+# Artefacts dictionary
+# True = Good Condition
+# False = Damaged
+
+artefacts = {
+    "Stone Arrowheads": True,
+    "Old Photograph": True,
+    "Handwritten Letter": True,
+    "Historic Coin": True,
+    "War Medal": True,
+    "Vintage Map": True,
+    "Old Newspaper": True,
+    "Ceramic Pot": True,
+    "Ancient Tool": True,
+    "Rare Book": True
+}
+
+# Clears the console screen for better readability
+def clear_screen():
+    os.system('cls' if os.name == 'nt' else 'clear')
+
+# Displays the main menu options
+def display_menu():
+    print("\n--- Artefact Management System ---")
+    print("1. View Available Artefacts")
+    print("2. Mark Artefact as Damaged")
+    print("3. Mark Artefact as Good")
+    print("4. Search Artefact")
+    print("5. Add New Artefact")
+    print("6. Remove Artefact")
+    print("7. View Damaged Artefacts")
+    print("8. Count Artefacts")
+    print("9. View All Artefacts")
+    print("10. Exit")
+    print("----------------------------------")
+
+# Displays all artefacts that are currently in good condition
+def view_available_artefacts():
+    clear_screen()
+
+    print("\nAvailable Artefacts:")
+
+    found = False
+
+    for artefact, available in artefacts.items():
+        if available:
+            print(f"- {artefact}")
+            found = True
+
+    if not found:
+        print("No artefacts available.")
+
+    input("\nPress Enter to continue...")
+
+# Allows the user to mark an artefact as damaged
+def mark_artefact_damaged():
+    clear_screen()
+
+    artefact_name = input(
+        "Enter the artefact name to mark as damaged: "
+    ).strip()
+
+    if artefact_name in artefacts:
+        if artefacts[artefact_name]:
+            artefacts[artefact_name] = False
+            print(f"'{artefact_name}' has been marked as damaged.")
+        else:
+            print(f"'{artefact_name}' is already damaged.")
+    else:
+        print("Artefact not found.")
+
+    input("\nPress Enter to continue...")
+
+# Allows the user to mark a damaged artefact as good
+def mark_artefact_good():
+    clear_screen()
+
+    artefact_name = input(
+        "Enter the artefact name to mark as good: "
+    ).strip()
+
+    if artefact_name in artefacts:
+        if not artefacts[artefact_name]:
+            artefacts[artefact_name] = True
+            print(f"'{artefact_name}' has been marked as good.")
+        else:
+            print(f"'{artefact_name}' is already in good condition.")
+    else:
+        print("Artefact not found.")
+
+    input("\nPress Enter to continue...")
+
+# Searches for an artefact and displays its condition
+def search_artefact():
+    clear_screen()
+
+    artefact_name = input(
+        "Enter artefact name to search: "
+    ).strip()
+
+    if artefact_name in artefacts:
+        if artefacts[artefact_name]:
+            print(f"'{artefact_name}' is in good condition.")
+        else:
+            print(f"'{artefact_name}' is damaged.")
+    else:
+        print("Artefact not found.")
+
+    input("\nPress Enter to continue...")
+
+# Adds a new artefact to the system
+def add_artefact():
+    clear_screen()
+
+    artefact_name = input(
+        "Enter new artefact name: "
+    ).strip()
+
+    if artefact_name == "":
+        print("Artefact name cannot be empty.")
+
+    elif artefact_name in artefacts:
+        print("Artefact already exists.")
+
+    else:
+        artefacts[artefact_name] = True
+        print("Artefact added successfully.")
+
+    input("\nPress Enter to continue...")
+
+# Removes an existing artefact from the system
+def remove_artefact():
+    clear_screen()
+
+    artefact_name = input(
+        "Enter artefact name to remove: "
+    ).strip()
+
+    if artefact_name in artefacts:
+        del artefacts[artefact_name]
+        print("Artefact removed successfully.")
+    else:
+        print("Artefact not found.")
+
+    input("\nPress Enter to continue...")
+
+# Displays all damaged artefacts
+def view_damaged_artefacts():
+    clear_screen()
+
+    print("\nDamaged Artefacts:")
+
+    found = False
+
+    for artefact, available in artefacts.items():
+        if not available:
+            print(f"- {artefact}")
+            found = True
+
+    if not found:
+        print("No damaged artefacts.")
+
+    input("\nPress Enter to continue...")
+
+
+def count_artefacts():
+    clear_screen()
+
+    print(f"Total artefacts: {len(artefacts)}")
+
+    input("\nPress Enter to continue...")
+
+# Displays all artefacts together with their condition
+def view_all_artefacts():
+    clear_screen()
+
+    print("\nAll Artefacts:")
+
+    for artefact, available in artefacts.items():
+        if available:
+            status = "Good"
+        else:
+            status = "Damaged"
+
+        print(f"{artefact} - {status}")
+
+    input("\nPress Enter to continue...")
+
+# Exits the application
+def exit_program():
+    print("Exiting the system. Have a great day!")
+    time.sleep(1)
+    sys.exit()
+
+# Main program loop that keeps the system running
+def main():
+
+    while True:
+
+        clear_screen()
+        display_menu()
+
+        choice = input("Enter your choice (1-10): ")
+
+        if choice == "1":
+            view_available_artefacts()
+
+        elif choice == "2":
+            mark_artefact_damaged()
+
+        elif choice == "3":
+            mark_artefact_good()
+
+        elif choice == "4":
+            search_artefact()
+
+        elif choice == "5":
+            add_artefact()
+
+        elif choice == "6":
+            remove_artefact()
+
+        elif choice == "7":
+            view_damaged_artefacts()
+
+        elif choice == "8":
+            count_artefacts()
+
+        elif choice == "9":
+            view_all_artefacts()
+
+        elif choice == "10":
+            exit_program()
+
+        else:
+            print("Invalid choice.")
+            time.sleep(1)
+
+# Starts the program
+if __name__ == "__main__":
+    main()
